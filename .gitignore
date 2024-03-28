@@ -1,0 +1,5 @@
+certs
+venv
+.env
+src/__pycache__
+test_decode.py

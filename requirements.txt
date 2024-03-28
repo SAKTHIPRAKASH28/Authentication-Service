@@ -1,0 +1,11 @@
+cryptography
+fastapi
+uvicorn[standard]
+python-jose[cryptography]
+python-dotenv
+passlib[bcrypt]
+regex
+motor
+python-secrets
+cachetools
+bson
