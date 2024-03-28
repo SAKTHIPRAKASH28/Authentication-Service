@@ -29,5 +29,5 @@ async def refresh(token: str):
 if __name__ == '__main__':
     import os
     import uvicorn
-    PORT = int(os.getenv("PORT", 8001))
+    PORT = int(os.getenv("PORT", 8000))
     uvicorn.run("main:app", host="127.0.0.1", port=PORT, reload=True)
