@@ -1,5 +1,5 @@
 from fastapi import (FastAPI, status, Depends)
-from utils import *
+from src.utils import *
 
 
 app = FastAPI()

@@ -2,4 +2,5 @@ certs
 venv
 .env
 src/__pycache__
+__pycache__
 test_decode.py
