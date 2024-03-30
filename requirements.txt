@@ -1,8 +1,11 @@
 cryptography
 fastapi
 uvicorn[standard]
+python-jose[cryptography]
+python-dotenv
 passlib[bcrypt]
 regex
+firebase_admin
 python-secrets
 cachetools
-firebase_admin
+secure-smtplib

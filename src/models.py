@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, validator,EmailStr
 import regex as re
 import datetime
 
@@ -6,7 +6,13 @@ import datetime
 class UserModel(BaseModel):
     username: str = Field(..., min_length=5, max_length=20)
     password: str = Field(...)
+    email: EmailStr
 
+    @validator('email')
+    def check_email_domain(cls, v):
+        if not v.endswith('@student.tce.edu'):
+            raise ValueError('Email must be from student.tce.edu domain')
+        return v
     @validator('password')
     def validate_password(cls, value):
         if len(value) < 8:

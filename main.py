@@ -1,14 +1,20 @@
 from fastapi import (FastAPI, status, Depends)
 from src.utils import *
-
+from src.emailotp import *
 
 app = FastAPI()
 
 
 @app.post("/addUser", status_code=status.HTTP_201_CREATED)
-async def new_user(user: UserModel):
-    result = await add_user(user.username, user.password)
-    return result
+async def new_user(user: UserModel,otp:str=None):
+    if not otp:
+        await send_email(user.email)
+    else:
+        if validate_otp(user.email,otp):
+            result = await add_user(user.username, user.password,user.email)
+            return result
+        else:
+            raise HTTPException(status_code=401, detail="Invalid OTP")
 
 
 @app.post("/getJwt", status_code=status.HTTP_201_CREATED)
