@@ -9,8 +9,8 @@ db = firestore.client()
 collection_ref = db.collection("Users")
 
 
-def get_user_creds(username):
-    query = collection_ref.where("username", "==", username).limit(1)
+def get_user_creds(username,param="username"):
+    query = collection_ref.where(param, "==", username).limit(1)
     users = query.stream()
 
     for user in users:
@@ -21,9 +21,9 @@ def get_user_creds(username):
     return None
 
 
-def set_user_creds(username, password):
+def set_user_creds(username, password,email):
     try:
-        collection_ref.add({"username": username, "password": password})
+        collection_ref.add({"username": username, "password": password,"email":email})
     except Exception as e:
         raise e
 

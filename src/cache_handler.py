@@ -24,7 +24,10 @@ def add_to_otp_cache(email, otp):
     return True
 
 def get_from_otp_cache(email):
-    return otp_cache[email]
+    try:
+        return otp_cache[email]
+    except:
+        raise HTTPException(status_code=401,detail="OTP Invalid")
 
 
 

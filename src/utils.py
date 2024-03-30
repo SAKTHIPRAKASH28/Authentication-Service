@@ -23,13 +23,14 @@ async def verify_password(username: str, password: str):
     return (pwd_context.verify(password, creds["password"]), creds['_id'])
 
 
-async def add_user(username: str, password: str) -> None:
+async def add_user(username: str, password: str,email) -> None:
     try:
-        exists = get_user_creds(username)
-        if exists:
+        exists_usr = get_user_creds(username)
+
+        if exists_usr:
             raise HTTPException(
                 status_code=422, detail="Username already exists")
-        set_user_creds(username, get_pwd_hash(password))
+        set_user_creds(username, get_pwd_hash(password),email)
         return {"message": "User added successfully"}
     except Exception as e:
         raise HTTPException(status_code=422, detail=str(e))

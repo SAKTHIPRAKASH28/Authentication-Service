@@ -5,6 +5,7 @@ python-jose[cryptography]
 python-dotenv
 passlib[bcrypt]
 regex
+pydantic[email]
 firebase_admin
 python-secrets
 cachetools

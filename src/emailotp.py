@@ -5,8 +5,10 @@ from email.message import EmailMessage
 from dotenv import load_dotenv
 import string
 import secrets
-from cache_handler import *
+from .cache_handler import *
 import ssl
+from .db_handler import *
+
 load_dotenv()
 password=os.getenv("password")
 def generate_otp(length=6):
@@ -24,13 +26,23 @@ def generate_mail(email,otp):
     return msg
 
 def send_email(email):
+    exists_email = get_user_creds(email,"email")
+    if exists_email:
+        raise HTTPException(
+                status_code=422, detail="Email Linked with another account")    
     otp=generate_otp()
     add_to_otp_cache(email,otp)
     msg=generate_mail(email,otp)
-    with smtplib.SMTP("smtp.gmail.com",587) as smtp:
+    try:
+        smtp = smtplib.SMTP("smtp.gmail.com", 587)
         smtp.starttls(context=ssl.create_default_context())
-        smtp.login('noreply.lostandfoundtce@gmail.com',password)
+        smtp.login('noreply.lostandfoundtce@gmail.com', password)
         smtp.send_message(msg)
+        return {"status":"Email Sent Successfully"}
+    except:
+        return{"status":"Error. Please check your email id and password"}
+    finally:
+        smtp.quit()
 
 
 
