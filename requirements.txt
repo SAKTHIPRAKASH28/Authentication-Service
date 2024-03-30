@@ -9,3 +9,4 @@ motor
 python-secrets
 cachetools
 bson
+jwt
