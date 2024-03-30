@@ -6,7 +6,7 @@ import datetime
 class UserModel(BaseModel):
     username: str = Field(..., min_length=5, max_length=20)
     password: str = Field(...)
-    
+
     @validator('password')
     def validate_password(cls, value):
         if len(value) < 8:
