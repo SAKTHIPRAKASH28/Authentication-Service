@@ -7,7 +7,7 @@ load_dotenv()
 username = quote_plus(os.getenv("MONGO_USERNAME"))
 password = quote_plus(os.getenv("MONGO_PASSWORD"))
 uri = 'mongodb+srv://' + username + ':' + password + \
-    '@cluster0.shvj8sa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+    '@cluster0.eeycgk0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 client = motor.motor_asyncio.AsyncIOMotorClient(uri)
 db = client["lost_and_found"]["users"]
