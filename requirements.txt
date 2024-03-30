@@ -5,5 +5,4 @@ passlib[bcrypt]
 regex
 python-secrets
 cachetools
-jwt
 firebase_admin
