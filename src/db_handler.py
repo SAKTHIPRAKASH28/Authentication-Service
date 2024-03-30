@@ -1,5 +1,3 @@
-import os
-import asyncio
 import firebase_admin
 from firebase_admin import credentials, firestore
 cred = credentials.Certificate(
@@ -29,11 +27,3 @@ def set_user_creds(username, password):
     except Exception as e:
         raise e
 
-
-async def main():
-    set_user_creds("Sakthiprakash40", "example")
-    res = get_user_creds("Sakthiprakash40")
-    print(res["_id"])
-
-if __name__ == '__main__':
-    asyncio.run(main())

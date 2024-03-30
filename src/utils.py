@@ -1,6 +1,6 @@
 import jwt
 import secrets
-from fastapi import HTTPException, Query
+from fastapi import HTTPException
 from .db_handler import *
 from .models import *
 from .cache_handler import *
