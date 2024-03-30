@@ -2,8 +2,6 @@ import os
 import asyncio
 import firebase_admin
 from firebase_admin import credentials, firestore
-
-
 cred = credentials.Certificate(
     "./lost-and-found-2c2e1-firebase-adminsdk-g74lw-e6257f3cf5.json")
 
