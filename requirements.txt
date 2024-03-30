@@ -5,8 +5,7 @@ python-jose[cryptography]
 python-dotenv
 passlib[bcrypt]
 regex
-motor
+firebase_admin
 python-secrets
 cachetools
 jwt
-pymongo

@@ -1,36 +1,41 @@
-from urllib.parse import quote_plus
 import os
-from dotenv import load_dotenv
 import asyncio
-import motor.motor_asyncio
-load_dotenv()
-username = quote_plus(os.getenv("MONGO_USERNAME"))
-password = quote_plus(os.getenv("MONGO_PASSWORD"))
-uri = 'mongodb+srv://' + username + ':' + password + \
-    '@cluster0.eeycgk0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-
-client = motor.motor_asyncio.AsyncIOMotorClient(uri)
-db = client["lost_and_found"]["users"]
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 
-async def get_user_creds(username):
-    user = await db.find_one({"username": username})
-    if user:
-        user["_id"] = str(user["_id"])
-    return user
+cred = credentials.Certificate(
+    "./lost-and-found-2c2e1-firebase-adminsdk-g74lw-e6257f3cf5.json")
+
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+collection_ref = db.collection("Users")
 
 
-async def set_user_creds(username, password):
+def get_user_creds(username):
+    query = collection_ref.where("username", "==", username).limit(1)
+    users = query.stream()
+
+    for user in users:
+        user_data = user.to_dict()
+        user_data["_id"] = user.id
+        return user_data
+
+    return None
+
+
+def set_user_creds(username, password):
     try:
-        await db.insert_one({"username": username, "password": password})
+        collection_ref.add({"username": username, "password": password})
     except Exception as e:
         raise e
 
 
 async def main():
-    await set_user_creds("Sakthiprakash40", "example")
-    res = await get_user_creds("Sakthiprakash40")
-    print(res['_id'])
+    set_user_creds("Sakthiprakash40", "example")
+    res = get_user_creds("Sakthiprakash40")
+    print(res["_id"])
 
 if __name__ == '__main__':
     asyncio.run(main())
